@@ -1,0 +1,3 @@
+= htmx-quarkus-demo image:https://github.com/t1/htmx-quarkus-demo/actions/workflows/maven.yml/badge.svg[link=https://github.com/t1/htmx-quarkus-demo/actions/workflows/maven.yml]
+
+A demo for https://htmx.org/docs/[htmx] using https://github.com/t1/bulma-java[bulma-java].
