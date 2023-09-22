@@ -51,7 +51,7 @@
         <dependency>
             <groupId>org.webjars.npm</groupId>
             <artifactId>fortawesome__fontawesome-free</artifactId>
-            <version>5.15.4</version>
+            <version>6.4.2</version>
         </dependency>
         <dependency>
             <groupId>org.webjars.npm</groupId>
