@@ -43,10 +43,10 @@ public class Page implements Renderable {
     }
 
     private Navbar navbar() {
-        return Navbar.navbar("the-navbar").classes("is-fixed-top px-5 has-shadow")
+        return Navbar.navbar("the-navbar").classes("is-fixed-top", "px-5", "has-shadow")
                 .hasBackground(dark(SUCCESS))
                 .start(tabs().content(
-                        tab("Search", "/search", "search"),
+                        tab("Search", SearchPage.PATH, "search"),
                         tab("Other", "/other", "wrench")))
                 .end(div().content(buttons().content(
                         button("Log in").is(SMALL, WARNING)
@@ -63,7 +63,7 @@ public class Page implements Renderable {
         return item;
     }
 
-    public Page content(Renderable content) {
+    public Page content(Renderable... content) {
         this.html = html.body((AbstractElement<?> body) ->
                 body.content("container", container ->
                         container.content("section", section ->

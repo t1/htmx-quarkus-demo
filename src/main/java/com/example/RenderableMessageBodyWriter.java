@@ -8,7 +8,6 @@ import jakarta.ws.rs.ext.MessageBodyWriter;
 import jakarta.ws.rs.ext.Provider;
 
 import java.io.OutputStream;
-import java.io.PrintStream;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
 
@@ -24,6 +23,6 @@ public class RenderableMessageBodyWriter implements MessageBodyWriter<Renderable
 
     @Override
     public void writeTo(Renderable renderable, Class<?> type, Type genericType, Annotation[] annotations, MediaType mediaType, MultivaluedMap<String, Object> httpHeaders, OutputStream entityStream) {
-        new PrintStream(entityStream).append(renderable.render());
+        renderable.render(entityStream);
     }
 }
