@@ -24,6 +24,6 @@ jobs:
       - name: Build (skipITs)
         run: mvn --batch-mode --show-version --no-transfer-progress -D CI=GitHub install
       - name: Install Playwright
-        run: mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D exec.args="install -PIT --with-deps"
+        run: mvn exec:java --errors -PIT -D exec.mainClass=com.microsoft.playwright.CLI -D exec.args="install --with-deps"
       - name: Run ITs
         run: mvn -PIT -D CI=GitHub verify
