@@ -21,9 +21,9 @@ jobs:
           java-version: ${{ matrix.jdk }}
           cache: 'maven'
 
-      - name: Build
-        run: mvn --batch-mode --show-version --no-transfer-progress -D CI=GitHub -D skipITs install
+      - name: Build (skipITs)
+        run: mvn --batch-mode --show-version --no-transfer-progress -D CI=GitHub install
       - name: Install Playwright
-        run: mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D exec.args="install --with-deps"
+        run: mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D exec.args="install -PIT --with-deps"
       - name: Run ITs
-        run: mvn test
+        run: mvn -PIT -D CI=GitHub verify
