@@ -72,7 +72,7 @@ public class SearchPage {
     private Renderable productTeaser(Product product) {
         return media()
                 .left(figure().content(imageP(_64x64).content(
-                        img("https://bulma.io/images/placeholders/128x128.png", "image"))))
+                        img("128x128.png", "image"))))
                 .content(
                         div().content(strong(product.name)),
                         product.details());
@@ -84,7 +84,7 @@ public class SearchPage {
             filters.compute(product.getClass(), (unused, existing) -> {
                 if (existing == null)
                     existing = div().classes(product.getTypeSlug() + "-filters")
-                            .content(title(5, product.getType()));
+                            .content(title(5, product.getType()).classes("mb-1"));
                 for (Filter filter : product.filters())
                     filter.addTo(existing, activeFilters);
                 return existing;

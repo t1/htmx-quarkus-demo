@@ -49,7 +49,7 @@ public record Filter(String title, String slug, String id, String value) {
             this.addon = getOrCreate(filter.slug + "-filter", Button::buttonsAddon);
         }
 
-        private Element filterTitle(String text) {return Title.title(6, text).classes("mb-1 mt-2");}
+        private Element filterTitle(String text) {return Title.title(6, text).classes("ml-1 mb-1 mt-2");}
 
         public void option(Filter filter, Set<String> activeFilters) {
             addon.getOrCreate(filter.expression(), () -> optionButton(filter, activeFilters));
