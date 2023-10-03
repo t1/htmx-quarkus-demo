@@ -10,6 +10,7 @@ jobs:
     strategy:
       matrix:
         jdk: [ 17 ]
+    timeout-minutes: 60
     runs-on: ubuntu-latest
 
     steps:
@@ -20,4 +21,9 @@ jobs:
           java-version: ${{ matrix.jdk }}
           cache: 'maven'
 
-      - run: mvn --batch-mode --show-version --no-transfer-progress -DCI=GitHub install
+      - name: Build
+        run: mvn --batch-mode --show-version --no-transfer-progress -D CI=GitHub -D skipITs install
+      - name: Install Playwright
+        run: mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D exec.args="install --with-deps"
+      - name: Run ITs
+        run: mvn test
