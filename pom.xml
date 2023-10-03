@@ -9,16 +9,18 @@
     <description>A demo for htmx using bulma-java</description>
 
     <properties>
-        <compiler-plugin.version>3.11.0</compiler-plugin.version>
         <maven.compiler.release>17</maven.compiler.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
         <quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
         <quarkus.platform.group-id>io.quarkus.platform</quarkus.platform.group-id>
         <quarkus.platform.version>3.4.1</quarkus.platform.version>
-        <skipITs>true</skipITs>
+
+        <compiler-plugin.version>3.11.0</compiler-plugin.version>
         <surefire-plugin.version>3.1.2</surefire-plugin.version>
     </properties>
+
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -122,7 +124,9 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+
     <build>
+        <defaultGoal>verify</defaultGoal>
         <plugins>
             <plugin>
                 <groupId>${quarkus.platform.group-id}</groupId>
@@ -182,6 +186,7 @@
             </plugin>
         </plugins>
     </build>
+
     <profiles>
         <profile>
             <id>native</id>
