@@ -20,10 +20,9 @@ In the navbar, the login button is replaced with a logout button after a 1s dela
 
 We use https://playwright.dev[Playwright] for (demo-)testing the UI.
 After running the `UI_IT`, you can find screenshots in `target/screenshots` and a Playwright test trace zip `target/playwright-trace.zip"`.
-
-To view that file, uncomment the `<scope>test</scope>` for `playwright` in the `pom.xml` (or the next command won't find the class `com.microsoft.playwright.CLI`)
+To view that file, run:
 
 [source,bash]
 ----
-mvn exec:java -e -Dexec.mainClass=com.microsoft.playwright.CLI -Dexec.args="show-trace target/playwright-trace.zip"
+mvn exec:java --errors -PIT -Dexec.mainClass=com.microsoft.playwright.CLI -Dexec.args="show-trace target/playwright-trace.zip"
 ----
