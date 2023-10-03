@@ -10,3 +10,8 @@ mvn quarkus:dev
 ----
 
 Then press `w` in the cli to open the web page.
+
+You may want to search for `shoe` to find all three shoes from two brands.
+Filters are displayed dynamically depending on the search results; you can toggle them on or off.
+
+In the navbar, the login button is replaced with a logout button after a 1s delay and the time is updated via websockets.

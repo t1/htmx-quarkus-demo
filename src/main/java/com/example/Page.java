@@ -13,6 +13,7 @@ import static com.github.t1.bulmajava.basic.Body.body;
 import static com.github.t1.bulmajava.basic.Color.SUCCESS;
 import static com.github.t1.bulmajava.basic.Color.WARNING;
 import static com.github.t1.bulmajava.basic.Html.html;
+import static com.github.t1.bulmajava.basic.Renderable.RenderableString.string;
 import static com.github.t1.bulmajava.basic.Size.SMALL;
 import static com.github.t1.bulmajava.basic.State.ACTIVE;
 import static com.github.t1.bulmajava.basic.Style.WHITE;
@@ -49,6 +50,8 @@ public class Page implements Renderable {
                         tab("Search", SearchPage.PATH, "search"),
                         tab("Other", "/other", "wrench")))
                 .end(div().content(buttons().content(
+                        button().attr("hx-ws", "connect:/tick").is(SMALL, WHITE).content(
+                                div().id("ticker").content(string("?"))),
                         button("Log in").is(SMALL, WARNING)
                                 .attr("hx-trigger", "load delay:1s")
                                 .attr("hx-post", "/login")
