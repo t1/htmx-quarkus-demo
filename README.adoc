@@ -19,8 +19,8 @@ In the navbar, the login button is replaced with a logout button after a 1s dela
 == UI-Tests
 
 We use https://playwright.dev[Playwright] for (demo-)testing the UI.
-After running the `UI_IT`, you can find screenshots in `target/screenshots` and a Playwright test trace zip `target/playwright-trace.zip"`.
-To view that file, run:
+After running the ITs, you can find screenshots in `target/screenshots` and a Playwright test trace zip `target/playwright-trace.zip"`.
+To view that file in the Playwright Trace viewer, run:
 
 [source,bash]
 ----

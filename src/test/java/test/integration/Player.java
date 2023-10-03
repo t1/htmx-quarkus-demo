@@ -5,6 +5,7 @@ import com.microsoft.playwright.BrowserContext;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Page.ScreenshotOptions;
 import com.microsoft.playwright.Playwright;
+import lombok.Getter;
 import lombok.experimental.Delegate;
 import org.junit.jupiter.api.extension.*;
 
@@ -21,7 +22,7 @@ public class Player implements Extension, BeforeAllCallback, BeforeEachCallback,
     private Browser browser;
 
     private BrowserContext context;
-    @Delegate private Page page;
+    @Getter @Delegate private Page page;
 
     @Override public void beforeAll(ExtensionContext jupiterContext) {
         playwright = Playwright.create();
