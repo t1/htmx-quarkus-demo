@@ -42,19 +42,19 @@ public class Ticks {
 
     @OnOpen
     public void onOpen(Session session) {
-        log.info("Session " + session.getId() + " started");
         sessions.put(session.getId(), session);
+        log.info("ws-session {} started (now {})", session.getId(), sessions.size());
     }
 
     @OnClose
     public void onClose(Session session) {
         sessions.remove(session.getId());
-        log.info("Session " + session.getId() + " closed");
+        log.info("ws-session {} closed (now {})", session.getId(), sessions.size());
     }
 
     @OnError
     public void onError(Session session, Throwable throwable) {
         sessions.remove(session.getId());
-        log.error("Session " + session.getId() + " left on error", throwable);
+        log.error("ws-session " + session.getId() + " left on error (now " + sessions.size() + ")", throwable);
     }
 }

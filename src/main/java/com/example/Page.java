@@ -11,7 +11,6 @@ import static com.github.t1.bulmajava.basic.Anchor.a;
 import static com.github.t1.bulmajava.basic.Basic.*;
 import static com.github.t1.bulmajava.basic.Body.body;
 import static com.github.t1.bulmajava.basic.Color.SUCCESS;
-import static com.github.t1.bulmajava.basic.Color.WARNING;
 import static com.github.t1.bulmajava.basic.Html.html;
 import static com.github.t1.bulmajava.basic.Renderable.RenderableString.string;
 import static com.github.t1.bulmajava.basic.Size.SMALL;
@@ -28,6 +27,7 @@ import static com.github.t1.bulmajava.layout.Section.section;
 @RequestScoped
 public class Page implements Renderable {
     @Inject UriInfo uriInfo;
+    @Inject Login login;
 
     private Html html;
 
@@ -52,10 +52,7 @@ public class Page implements Renderable {
                 .end(div().content(buttons().content(
                         button().attr("hx-ws", "connect:/tick").is(SMALL, WHITE).content(
                                 div().id("ticker").content(string("?"))),
-                        button("Log in").is(SMALL, WARNING)
-                                .attr("hx-trigger", "load delay:1s")
-                                .attr("hx-post", "/login")
-                                .attr("hx-swap", "outerHTML"))));
+                        login.button())));
     }
 
     private Element tab(String text, String href, String icon) {
