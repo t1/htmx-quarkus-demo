@@ -20,13 +20,16 @@ import static jakarta.ws.rs.core.MediaType.APPLICATION_JSON;
 public class Login {
     @Inject User user;
     @Inject HttpSession session;
+    @Inject Connections connections;
 
     @POST @Path("/login/{userId}")
     @Consumes(APPLICATION_JSON)
     public Button login(@PathParam("userId") String userId) {
         user.login(userId);
         log.info("login {}", user);
-        return button(true);
+        var button = button(true);
+        connections.broadcast(button);
+        return button;
     }
 
     @POST @Path("/logout")
@@ -34,15 +37,18 @@ public class Login {
     public Button logout() {
         log.info("logout {}", user);
         session.invalidate();
-        return button(false);
+        var button = button(false);
+        connections.broadcast(button);
+        return button;
     }
 
     public Button button() {return button(user.isLoggedIn());}
 
     private Button button(boolean loggedIn) {
         return Button.button(loggedIn ? user.getName() : "Login")
+                .id("login")
                 .is(SMALL, loggedIn ? LINK : PRIMARY)
                 .attr("hx-post", loggedIn ? "/logout" : "/login/jane")
-                .attr("hx-swap", "outerHTML");
+                .attr("hx-swap", "none");
     }
 }

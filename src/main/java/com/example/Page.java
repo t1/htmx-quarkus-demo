@@ -35,11 +35,14 @@ public class Page implements Renderable {
         this.html = html(title)
                 .stylesheet("/webjars/fortawesome__fontawesome-free/css/all.css")
                 .stylesheet("/webjars/bulma/css/bulma.css")
-                .script("/webjars/htmx.org/dist/htmx.min.js")
+                .script("/webjars/htmx.org/dist/htmx.js")
                 .script("json-enc.js")
                 .content(body().hasNavbarFixedTop().content(
-                        container().attr("hx-ext", "json-enc").content(section().classes("mt-6")
-                                .content(navbar(), Title.title(title)))));
+                        container()
+                                .attr("hx-ws", "connect:/connect")
+                                .attr("hx-ext", "json-enc")
+                                .content(
+                                        section().classes("mt-6").content(navbar(), Title.title(title)))));
         return this;
     }
 
@@ -50,7 +53,7 @@ public class Page implements Renderable {
                         tab("Search", SearchPage.PATH, "search"),
                         tab("Other", "/other", "wrench")))
                 .end(div().content(buttons().content(
-                        button().attr("hx-ws", "connect:/tick").is(SMALL, WHITE).content(
+                        button().is(SMALL, WHITE).content(
                                 div().id("ticker").content(string("?"))),
                         login.button())));
     }
