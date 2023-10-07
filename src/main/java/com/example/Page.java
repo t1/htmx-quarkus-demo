@@ -3,8 +3,10 @@ package com.example;
 import com.github.t1.bulmajava.basic.*;
 import com.github.t1.bulmajava.components.Navbar;
 import com.github.t1.bulmajava.elements.Title;
+import com.github.t1.bulmajava.layout.Section;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
+import jakarta.servlet.http.HttpSession;
 import jakarta.ws.rs.core.UriInfo;
 
 import static com.github.t1.bulmajava.basic.Anchor.a;
@@ -13,6 +15,7 @@ import static com.github.t1.bulmajava.basic.Body.body;
 import static com.github.t1.bulmajava.basic.Color.SUCCESS;
 import static com.github.t1.bulmajava.basic.Html.html;
 import static com.github.t1.bulmajava.basic.Renderable.RenderableString.string;
+import static com.github.t1.bulmajava.basic.Renderable.UnsafeString.unsafeString;
 import static com.github.t1.bulmajava.basic.Size.SMALL;
 import static com.github.t1.bulmajava.basic.State.ACTIVE;
 import static com.github.t1.bulmajava.basic.Style.WHITE;
@@ -26,10 +29,12 @@ import static com.github.t1.bulmajava.layout.Section.section;
 
 @RequestScoped
 public class Page implements Renderable {
+    @Inject HttpSession session;
     @Inject UriInfo uriInfo;
     @Inject Login login;
 
     private Html html;
+    private Section section;
 
     public Page title(String title) {
         this.html = html(title)
@@ -38,11 +43,19 @@ public class Page implements Renderable {
                 .script("/webjars/htmx.org/dist/htmx.js")
                 .script("json-enc.js")
                 .content(body().hasNavbarFixedTop().content(
-                        container()
-                                .attr("hx-ws", "connect:/connect")
-                                .attr("hx-ext", "json-enc")
-                                .content(
-                                        section().classes("mt-6").content(navbar(), Title.title(title)))));
+                        container().content(
+                                this.section = section().classes("mt-6")
+                                        .attr("hx-ws", "connect:/connect/" + session.getId())
+                                        .attr("hx-ext", "json-enc")
+                                        .content(
+                                                navbar(),
+                                                Title.title(title)))));
+        var body = this.html.findElement(e -> e.hasName("body")).orElseThrow();
+        body.content(Basic.element("script").content(unsafeString("""
+                document.body.addEventListener("reload-page", function(){
+                    window.location.reload();
+                })
+                """)));
         return this;
     }
 
@@ -67,10 +80,7 @@ public class Page implements Renderable {
     }
 
     public Page content(Renderable... content) {
-        this.html = html.body((AbstractElement<?> body) ->
-                body.content("container", container ->
-                        container.content("section", section ->
-                                section.content(content))));
+        this.section.content(content);
         return this;
     }
 

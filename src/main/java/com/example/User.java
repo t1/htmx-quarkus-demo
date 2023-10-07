@@ -16,4 +16,9 @@ public class User implements Serializable {
         this.id = userId;
         this.name = Character.toTitleCase(userId.charAt(0)) + userId.substring(1);
     }
+
+    public void logout() {
+        this.id = null;
+        this.name = null;
+    }
 }

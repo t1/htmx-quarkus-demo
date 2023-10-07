@@ -7,6 +7,8 @@ import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
+import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.core.UriInfo;
 import lombok.extern.slf4j.Slf4j;
 
 import static com.github.t1.bulmajava.basic.Color.LINK;
@@ -21,34 +23,41 @@ public class Login {
     @Inject User user;
     @Inject HttpSession session;
     @Inject Connections connections;
+    @Inject UriInfo uriInfo;
 
     @POST @Path("/login/{userId}")
     @Consumes(APPLICATION_JSON)
-    public Button login(@PathParam("userId") String userId) {
+    public Response login(@PathParam("userId") String userId) {
         user.login(userId);
         log.info("login {}", user);
         var button = button(true);
-        connections.broadcast(button);
-        return button;
+        return broadcast(button);
     }
 
     @POST @Path("/logout")
     @Consumes(APPLICATION_JSON)
-    public Button logout() {
+    public Response logout() {
         log.info("logout {}", user);
-        session.invalidate();
+        user.logout();
         var button = button(false);
-        connections.broadcast(button);
-        return button;
+        return broadcast(button);
     }
 
-    public Button button() {return button(user.isLoggedIn());}
+    public Button button() {
+        return button(user.isLoggedIn());
+    }
 
     private Button button(boolean loggedIn) {
         return Button.button(loggedIn ? user.getName() : "Login")
                 .id("login")
                 .is(SMALL, loggedIn ? LINK : PRIMARY)
                 .attr("hx-post", loggedIn ? "/logout" : "/login/jane")
-                .attr("hx-swap", "none");
+                .attr("hx-swap", "outerHTML");
+    }
+
+    private Response broadcast(Button button) {
+        var found = connections.broadcast(session.getId(), button);
+        if (found) return Response.noContent().build();
+        return Response.ok().header("HX-Trigger", "reload-page").build();
     }
 }
