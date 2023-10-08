@@ -41,12 +41,13 @@ public class Page implements Renderable {
                 .stylesheet("/webjars/fortawesome__fontawesome-free/css/all.css")
                 .stylesheet("/webjars/bulma/css/bulma.css")
                 .script("/webjars/htmx.org/dist/htmx.js")
-                .script("json-enc.js")
+                .script("/webjars/htmx.org/dist/ext/json-enc.js")
+                .script("/webjars/htmx.org/dist/ext/ws.js")
                 .content(body().hasNavbarFixedTop().content(
                         container().content(
                                 this.section = section().classes("mt-6")
-                                        .attr("hx-ws", "connect:/connect/" + session.getId())
-                                        .attr("hx-ext", "json-enc")
+                                        .attr("hx-ext", "json-enc,ws")
+                                        .attr("ws-connect", "/connect/" + session.getId())
                                         .content(
                                                 navbar(),
                                                 Title.title(title)))));
