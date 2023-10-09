@@ -37,10 +37,12 @@ public class Page implements Renderable {
     private Section section;
 
     public Page title(String title) {
+        //noinspection CommaExpressionJS,JSUnresolvedReference
         this.html = html(title)
                 .stylesheet("/webjars/fortawesome__fontawesome-free/css/all.css")
                 .stylesheet("/webjars/bulma/css/bulma.css")
                 .script("/webjars/htmx.org/dist/htmx.js")
+                .script("/webjars/htmx.org/dist/ext/debug.js")
                 .script("/webjars/htmx.org/dist/ext/json-enc.js")
                 .script("/webjars/htmx.org/dist/ext/ws.js")
                 .content(body().hasNavbarFixedTop().content(
@@ -78,6 +80,11 @@ public class Page implements Renderable {
         var item = li().content(a.content(span(text)).href(href));
         if (href.equals(uriInfo.getPath())) item = item.is(ACTIVE);
         return item;
+    }
+
+    public Page javaScriptCode(String code) {
+        this.html.javaScriptCode(code);
+        return this;
     }
 
     public Page content(Renderable... content) {
