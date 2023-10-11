@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Product Search</title>
+    <link rel="stylesheet" href="/webjars/fortawesome__fontawesome-free/css/all.css">
+    <link rel="stylesheet" href="/webjars/bulma/css/bulma.css">
+    <script src="/webjars/htmx.org/dist/htmx.js"></script>
+    <script src="/webjars/htmx.org/dist/ext/debug.js"></script>
+    <script src="/webjars/htmx.org/dist/ext/json-enc.js"></script>
+    <script src="/webjars/htmx.org/dist/ext/ws.js"></script>
+    <script src="validation.js"></script>
+</head>
+<body class="has-navbar-fixed-top">
+<div class="container">
+    <section class="section mt-6">
+        <!--hx-ext="json-enc,ws" ws-connect="/connect/vz-y7lOQLfnaVqPPqm1KwU1lo-RluKC6BSbGirKa">-->
+        <nav class="navbar is-fixed-top px-5 has-shadow has-background-success-dark" role="navigation"
+             aria-label="navigation">
+            <div id="the-navbar" class="navbar-menu">
+                <div class="navbar-start">
+                    <div class="tabs navbar-item">
+                        <ul>
+                            <li>
+                                <a class="has-text-white" href="/search">
+                                    <span class="icon is-small"><i class="fas fa-search" aria-hidden="true"></i></span>
+                                    <span>Search</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="has-text-white" href="/other">
+                                    <span class="icon is-small"><i class="fas fa-wrench" aria-hidden="true"></i></span>
+                                    <span>Other</span>
+                                </a>
+                            </li>
+                            <li class="is-active">
+                                <a class="has-text-white" href="/META-INF/resources/index.html">
+                                    <span class="icon is-small"><i class="fas fa-file-alt"
+                                                                   aria-hidden="true"></i></span>
+                                    <span>Static</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="navbar-end">
+                    <div class="navbar-item">
+                        <div class="buttons">
+                            <button class="button is-small is-white">
+                                <div id="ticker">?</div>
+                            </button>
+                            <button id="login" class="button is-small is-primary">
+                                <!--hx-post="/login/jane" hx-swap="outerHTML">-->
+                                Login
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        <h1 class="title is-1">Product Search</h1>
+        <div class="columns">
+            <div class="column is-3">
+                <div>
+                    <h6 class="title is-6">Filters</h6>
+                    <div id="filters"></div>
+                </div>
+            </div>
+            <div class="column">
+                <div class="field">
+                    <label class="label">Search</label>
+                    <div class="control has-icons-right">
+                        <span class="icon is-small is-right"><i class="fas fa-search"></i></span>
+                        <input id="search-input" class="input" type="text" name="search" placeholder="Search...">
+                        <!--hx-get="/search" hx-include="*"
+                        hx-push-url="true" hx-trigger="keyup changed delay:500ms" hx-swap="none">-->
+                    </div>
+                </div>
+                <div id="result-list">
+                    <h4 class="title is-4">Nothing searched, yet</h4>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<script>document.body.addEventListener("reload-page", function () {
+    window.location.reload();
+})
+</script>
+</body>
+</html>

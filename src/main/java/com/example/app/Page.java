@@ -68,7 +68,8 @@ public class Page implements Renderable {
                 .hasBackground(dark(SUCCESS))
                 .start(tabs().content(
                         tab("Search", SearchPage.PATH, "search"),
-                        tab("Other", "/other", "wrench")))
+                        tab("Other", "/other", "wrench"),
+                        tab("Static", "/index.html", "file-alt")))
                 .end(div().content(buttons().content(
                         button().is(SMALL, WHITE).content(
                                 div().id("ticker").content(string("?"))),
