@@ -1,41 +1,53 @@
 package com.example.app;
 
 import com.example.domain.Filter;
+import com.example.domain.Product;
 import com.github.t1.bulmajava.basic.AbstractElement;
 import com.github.t1.bulmajava.basic.Element;
 import com.github.t1.bulmajava.basic.Renderable;
 import com.github.t1.bulmajava.elements.Button;
 import com.github.t1.bulmajava.elements.Title;
-import lombok.EqualsAndHashCode;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.util.*;
 
+import static com.github.t1.bulmajava.basic.Basic.div;
 import static com.github.t1.bulmajava.basic.Color.INFO;
 import static com.github.t1.bulmajava.basic.State.ACTIVE;
 import static com.github.t1.bulmajava.elements.Button.button;
+import static com.github.t1.bulmajava.elements.Title.title;
 
-@EqualsAndHashCode(callSuper = true)
-public class FilterWidget extends AbstractElement<FilterWidget> {
-    static void filterWidget(AbstractElement<?> existing, Set<String> activeFilters, Filter filter) {
+class FilterWidget extends AbstractElement<FilterWidget> {
+    static Collection<AbstractElement<?>> filtersFor(List<Product> products, Set<String> activeFilters) {
+        Map<Class<? extends Product>, AbstractElement<?>> filterWidgets = new LinkedHashMap<>();
+        for (Product product : products) {
+            filterWidgets.compute(product.getClass(), (unused, existing) -> {
+                if (existing == null)
+                    existing = div().classes(product.getTypeSlug() + "-filters")
+                            .content(title(5, product.getType()).classes("mb-1"));
+                for (Filter filter : product.filters())
+                    filterWidget(existing, activeFilters, filter);
+                return existing;
+            });
+        }
+        return stripSingleElementFilters(filterWidgets.values());
+    }
+
+    private static void filterWidget(AbstractElement<?> existing, Set<String> activeFilters, Filter filter) {
         existing.getOrCreate(filter.slug() + "-filter-group", () -> new FilterWidget(filter))
                 .option(filter, activeFilters);
     }
 
-    private final Element title;
     private final AbstractElement<?> addon;
 
-    public FilterWidget(Filter filter) {
+    private FilterWidget(Filter filter) {
         super("div");
-        this.title = getOrCreate(filter.slug() + "-title", () -> filterTitle(filter.title()));
+        getOrCreate(filter.slug() + "-title", () -> filterTitle(filter.title()));
         this.addon = getOrCreate(filter.slug() + "-filter", Button::buttonsAddon);
     }
 
     private Element filterTitle(String text) {return Title.title(6, text).classes("ml-1 mb-1 mt-2");}
 
-    public void option(Filter filter, Set<String> activeFilters) {
+    private void option(Filter filter, Set<String> activeFilters) {
         addon.getOrCreate(filter.expression(), () -> optionButton(filter, activeFilters));
     }
 
@@ -60,9 +72,9 @@ public class FilterWidget extends AbstractElement<FilterWidget> {
         return String.join(",", allFilters);
     }
 
-    public long optionCount() {return addon.contentStream().count();}
+    private long optionCount() {return addon.contentStream().count();}
 
-    public static Collection<AbstractElement<?>> stripSingleElementFilters(Collection<AbstractElement<?>> categories) {
+    private static Collection<AbstractElement<?>> stripSingleElementFilters(Collection<AbstractElement<?>> categories) {
         for (var category : new ArrayList<>(categories)) {
             var categoryContent = category.contentAs(Renderable.ConcatenatedRenderable.class).renderables();
             int groupCount = 0;

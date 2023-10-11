@@ -1,9 +1,7 @@
 package com.example.app;
 
-import com.example.domain.Filter;
 import com.example.domain.Product;
 import com.example.domain.Products;
-import com.github.t1.bulmajava.basic.AbstractElement;
 import com.github.t1.bulmajava.basic.Element;
 import com.github.t1.bulmajava.basic.Renderable;
 import com.github.t1.bulmajava.form.Field;
@@ -17,7 +15,8 @@ import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.UriInfo;
 
 import java.net.URI;
-import java.util.*;
+import java.util.List;
+import java.util.Set;
 import java.util.stream.Stream;
 
 import static com.github.t1.bulmajava.basic.Basic.*;
@@ -48,7 +47,7 @@ public class SearchPage {
         List<Product> found = (search == null) ? List.of() : products.search(search).toList();
         var filterStrings = filterString == null ? new String[0] : filterString.split(",");
         var teasers = teasers(found, search, filterStrings);
-        var filters = filtersFor(found, Set.of(filterStrings));
+        var filters = FilterWidget.filtersFor(found, Set.of(filterStrings));
 
         if (fullPage())
             return page.title("Product Search").content(columns()
@@ -82,21 +81,6 @@ public class SearchPage {
 
     private Renderable details(Product product) {
         return p(product.details());
-    }
-
-    private Collection<AbstractElement<?>> filtersFor(List<Product> products, Set<String> activeFilters) {
-        Map<Class<? extends Product>, AbstractElement<?>> filterWidgets = new LinkedHashMap<>();
-        for (Product product : products) {
-            filterWidgets.compute(product.getClass(), (unused, existing) -> {
-                if (existing == null)
-                    existing = div().classes(product.getTypeSlug() + "-filters")
-                            .content(title(5, product.getType()).classes("mb-1"));
-                for (Filter filter : product.filters())
-                    FilterWidget.filterWidget(existing, activeFilters, filter);
-                return existing;
-            });
-        }
-        return FilterWidget.stripSingleElementFilters(filterWidgets.values());
     }
 
     private boolean fullPage() {

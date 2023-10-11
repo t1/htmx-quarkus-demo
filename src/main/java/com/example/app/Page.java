@@ -45,6 +45,7 @@ public class Page implements Renderable {
                 .script("/webjars/htmx.org/dist/ext/debug.js")
                 .script("/webjars/htmx.org/dist/ext/json-enc.js")
                 .script("/webjars/htmx.org/dist/ext/ws.js")
+                .script("validation.js")
                 .content(body().hasNavbarFixedTop().content(
                         container().content(
                                 this.section = section().classes("mt-6")
@@ -80,11 +81,6 @@ public class Page implements Renderable {
         var item = li().content(a.content(span(text)).href(href));
         if (href.equals(uriInfo.getPath())) item = item.is(ACTIVE);
         return item;
-    }
-
-    public Page javaScriptCode(String code) {
-        this.html.javaScriptCode(code);
-        return this;
     }
 
     public Page content(Renderable... content) {
