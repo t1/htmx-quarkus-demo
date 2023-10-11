@@ -1,4 +1,4 @@
-package com.example;
+package com.example.app;
 
 import com.github.t1.bulmajava.basic.AbstractElement;
 import com.github.t1.bulmajava.basic.Renderable;

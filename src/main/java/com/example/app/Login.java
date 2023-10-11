@@ -1,4 +1,4 @@
-package com.example;
+package com.example.app;
 
 import com.github.t1.bulmajava.elements.Button;
 import jakarta.inject.Inject;

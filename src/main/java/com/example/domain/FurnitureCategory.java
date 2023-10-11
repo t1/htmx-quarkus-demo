@@ -1,4 +1,4 @@
-package com.example;
+package com.example.domain;
 
 import static java.util.Locale.ROOT;
 

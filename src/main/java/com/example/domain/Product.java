@@ -1,6 +1,5 @@
-package com.example;
+package com.example.domain;
 
-import com.github.t1.bulmajava.basic.Renderable;
 import lombok.Data;
 import lombok.experimental.SuperBuilder;
 
@@ -13,7 +12,7 @@ public abstract class Product {
     Integer id;
     String name;
 
-    public abstract Renderable details();
+    public abstract String details();
 
     public boolean matches(String searchString) {
         return toString().toLowerCase(ROOT).contains(searchString.toLowerCase(ROOT));

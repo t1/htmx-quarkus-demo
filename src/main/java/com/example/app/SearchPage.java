@@ -1,5 +1,8 @@
-package com.example;
+package com.example.app;
 
+import com.example.domain.Filter;
+import com.example.domain.Product;
+import com.example.domain.Products;
 import com.github.t1.bulmajava.basic.AbstractElement;
 import com.github.t1.bulmajava.basic.Element;
 import com.github.t1.bulmajava.basic.Renderable;
@@ -17,8 +20,7 @@ import java.net.URI;
 import java.util.*;
 import java.util.stream.Stream;
 
-import static com.github.t1.bulmajava.basic.Basic.div;
-import static com.github.t1.bulmajava.basic.Basic.strong;
+import static com.github.t1.bulmajava.basic.Basic.*;
 import static com.github.t1.bulmajava.basic.Renderable.ConcatenatedRenderable.concat;
 import static com.github.t1.bulmajava.columns.Columns.columns;
 import static com.github.t1.bulmajava.elements.Image.*;
@@ -74,23 +76,27 @@ public class SearchPage {
                 .left(figure().content(imageP(_64x64).content(
                         img("128x128.png", "image"))))
                 .content(
-                        div().content(strong(product.name)),
-                        product.details());
+                        div().content(strong(product.getName())),
+                        details(product));
+    }
+
+    private Renderable details(Product product) {
+        return p(product.details());
     }
 
     private Collection<AbstractElement<?>> filtersFor(List<Product> products, Set<String> activeFilters) {
-        Map<Class<? extends Product>, AbstractElement<?>> filters = new LinkedHashMap<>();
+        Map<Class<? extends Product>, AbstractElement<?>> filterWidgets = new LinkedHashMap<>();
         for (Product product : products) {
-            filters.compute(product.getClass(), (unused, existing) -> {
+            filterWidgets.compute(product.getClass(), (unused, existing) -> {
                 if (existing == null)
                     existing = div().classes(product.getTypeSlug() + "-filters")
                             .content(title(5, product.getType()).classes("mb-1"));
                 for (Filter filter : product.filters())
-                    filter.addTo(existing, activeFilters);
+                    FilterWidget.filterWidget(existing, activeFilters, filter);
                 return existing;
             });
         }
-        return Filter.stripSingleElementFilters(filters.values());
+        return FilterWidget.stripSingleElementFilters(filterWidgets.values());
     }
 
     private boolean fullPage() {

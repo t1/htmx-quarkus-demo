@@ -1,4 +1,4 @@
-package com.example;
+package com.example.app;
 
 import io.quarkus.scheduler.Scheduled;
 import io.quarkus.scheduler.ScheduledExecution;

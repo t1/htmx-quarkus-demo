@@ -1,12 +1,12 @@
-package com.example;
+package com.example.domain;
 
 import jakarta.enterprise.context.ApplicationScoped;
 
 import java.util.List;
 import java.util.stream.Stream;
 
-import static com.example.FurnitureCategory.KITCHEN;
-import static com.example.FurnitureCategory.LIVING_ROOM;
+import static com.example.domain.FurnitureCategory.KITCHEN;
+import static com.example.domain.FurnitureCategory.LIVING_ROOM;
 
 @ApplicationScoped
 public class Products {
