@@ -69,7 +69,7 @@ public class Page implements Renderable {
                 .start(tabs().content(
                         tab("Search", SearchPage.PATH, "search"),
                         tab("Other", "/other", "wrench"),
-                        tab("Static", "/index.html", "file-alt")))
+                        tab("Static", "/static/index.html", "file-alt")))
                 .end(div().content(buttons().content(
                         button().is(SMALL, WHITE).content(
                                 div().id("ticker").content(string("?"))),
