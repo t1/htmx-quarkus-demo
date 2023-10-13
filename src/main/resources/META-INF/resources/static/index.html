@@ -8,15 +8,10 @@
     <link rel="stylesheet" href="/webjars/fortawesome__fontawesome-free/css/all.css">
     <link rel="stylesheet" href="/webjars/bulma/css/bulma.css">
     <script src="/webjars/htmx.org/dist/htmx.js"></script>
-    <script src="/webjars/htmx.org/dist/ext/debug.js"></script>
-    <script src="/webjars/htmx.org/dist/ext/json-enc.js"></script>
-    <script src="/webjars/htmx.org/dist/ext/ws.js"></script>
-    <script src="../validation.js"></script>
 </head>
 <body class="has-navbar-fixed-top">
 <div class="container">
     <section class="section mt-6">
-        <!--hx-ext="json-enc,ws" ws-connect="/connect/vz-y7lOQLfnaVqPPqm1KwU1lo-RluKC6BSbGirKa">-->
         <nav class="navbar is-fixed-top px-5 has-shadow has-background-success-dark" role="navigation"
              aria-label="navigation">
             <div id="the-navbar" class="navbar-menu">
@@ -45,22 +40,13 @@
                         </ul>
                     </div>
                 </div>
-                <div class="navbar-end">
-                    <div class="navbar-item">
-                        <div class="buttons">
-                            <button class="button is-small is-white">
-                                <div id="ticker">?</div>
-                            </button>
-                            <button id="login" class="button is-small is-primary">
-                                <!--hx-post="/login/jane" hx-swap="outerHTML">-->
-                                Login
-                            </button>
-                        </div>
-                    </div>
-                </div>
             </div>
         </nav>
         <h1 class="title is-1">Product Search</h1>
+        <h4 class="subtitle is-4">
+            This is a static non-htmx copy of the real search page usable to demonstrate how to add <code>hx-</code>
+            tags
+        </h4>
         <div class="columns">
             <div class="column is-3">
                 <div>
@@ -74,8 +60,6 @@
                     <div class="control has-icons-right">
                         <span class="icon is-small is-right"><i class="fas fa-search"></i></span>
                         <input id="search-input" class="input" type="text" name="search" placeholder="Search...">
-                        <!--hx-get="/static/search" hx-include="*"
-                        hx-push-url="true" hx-trigger="keyup changed delay:500ms" hx-swap="none">-->
                     </div>
                 </div>
                 <div id="result-list">
@@ -85,9 +69,5 @@
         </div>
     </section>
 </div>
-<script>document.body.addEventListener("reload-page", function () {
-    window.location.reload();
-})
-</script>
 </body>
 </html>
