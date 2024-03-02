@@ -45,7 +45,7 @@
         <dependency>
             <groupId>com.github.t1</groupId>
             <artifactId>bulma-java</artifactId>
-            <version>1.0a5</version>
+            <version>1.0a6</version>
         </dependency>
 
         <dependency>
@@ -150,6 +150,7 @@
                 </executions>
             </plugin>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>${compiler-plugin.version}</version>
                 <configuration>

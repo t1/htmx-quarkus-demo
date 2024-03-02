@@ -10,13 +10,13 @@ import java.net.URI;
 
 import static com.github.t1.bulmajava.basic.Attribute.StringAttribute.stringAttribute;
 import static com.github.t1.bulmajava.basic.Basic.div;
-import static com.github.t1.bulmajava.basic.Basic.form;
 import static com.github.t1.bulmajava.basic.Color.LINK;
 import static com.github.t1.bulmajava.basic.Style.LIGHT;
 import static com.github.t1.bulmajava.columns.Columns.columns;
 import static com.github.t1.bulmajava.elements.Button.button;
 import static com.github.t1.bulmajava.elements.Button.buttons;
 import static com.github.t1.bulmajava.form.Field.field;
+import static com.github.t1.bulmajava.form.Form.form;
 import static com.github.t1.bulmajava.form.Input.input;
 import static com.github.t1.bulmajava.form.InputType.EMAIL;
 import static com.github.t1.bulmajava.form.InputType.TEXT;
