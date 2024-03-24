@@ -45,7 +45,7 @@
         <dependency>
             <groupId>com.github.t1</groupId>
             <artifactId>bulma-java</artifactId>
-            <version>1.0a6</version>
+            <version>1.0a7</version>
         </dependency>
 
         <dependency>
