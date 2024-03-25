@@ -60,7 +60,13 @@
         <dependency>
             <groupId>org.webjars.npm</groupId>
             <artifactId>bulma</artifactId>
-            <version>0.9.4</version>
+            <version>1.0.0</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.webjars.npm</groupId>
+                    <artifactId>sass</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.webjars.npm</groupId>
