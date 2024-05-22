@@ -8,6 +8,7 @@ import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import jakarta.servlet.http.HttpSession;
 import jakarta.ws.rs.core.UriInfo;
+import lombok.RequiredArgsConstructor;
 
 import static com.github.t1.bulmajava.basic.Anchor.a;
 import static com.github.t1.bulmajava.basic.Basic.*;
@@ -28,10 +29,11 @@ import static com.github.t1.bulmajava.layout.Container.container;
 import static com.github.t1.bulmajava.layout.Section.section;
 
 @RequestScoped
+@RequiredArgsConstructor(onConstructor_ = @Inject)
 public class Page implements Renderable {
-    @Inject HttpSession session;
-    @Inject UriInfo uriInfo;
-    @Inject Login login;
+    private final HttpSession session;
+    private final UriInfo uriInfo;
+    private final Login login;
 
     private Html html;
     private Section section;

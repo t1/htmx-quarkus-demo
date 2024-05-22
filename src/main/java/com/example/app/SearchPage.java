@@ -13,6 +13,7 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.UriInfo;
+import lombok.RequiredArgsConstructor;
 
 import java.net.URI;
 import java.util.List;
@@ -31,12 +32,13 @@ import static com.github.t1.bulmajava.form.InputType.TEXT;
 import static com.github.t1.bulmajava.layout.Media.media;
 
 @Path("/")
+@RequiredArgsConstructor(onConstructor_ = @Inject)
 @SuppressWarnings("QsUndeclaredPathMimeTypesInspection")
 public class SearchPage {
     public static final String PATH = "/search";
 
-    @Inject Page page;
-    @Inject Products products;
+    private final Page page;
+    private final Products products;
     @Context UriInfo uriInfo;
     @HeaderParam("Referer") URI referer;
 
