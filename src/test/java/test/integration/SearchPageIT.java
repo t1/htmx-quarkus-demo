@@ -12,7 +12,6 @@ import java.util.stream.Stream;
 import static java.time.temporal.ChronoUnit.SECONDS;
 import static org.assertj.core.api.Assertions.within;
 import static test.integration.CustomAssertions.then;
-import static test.integration.Player.*;
 
 @QuarkusIntegrationTest
 class SearchPageIT {
@@ -78,11 +77,13 @@ class SearchPageIT {
     }
 
     @Test
-    void shouldReceiveTimeUpdates() throws Exception {
+    void shouldReceiveTimeUpdates() {
         player.navigate("http://localhost:8081");
         player.screenshot("first-time-1.png");
 
-        waitWhile(() -> "?".equals(ticker.innerText()), "wait for ticker to start");
+        player.waitForFunction("""
+                document.getElementById("ticker").innerText !== "?"
+                """);
         then(LocalTime.parse(ticker.innerText())).isCloseTo(LocalTime.now(), within(10, SECONDS));
     }
 

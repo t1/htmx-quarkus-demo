@@ -36,7 +36,7 @@ public class Page implements Renderable {
     private final UriInfo uriInfo;
     private final Login login;
 
-    @ConfigProperty(name = "htmx.debug", defaultValue = "false") Boolean debug;
+    @ConfigProperty(name = "htmx.debug", defaultValue = "false") boolean debug;
 
     private Html html;
     private Section section;
