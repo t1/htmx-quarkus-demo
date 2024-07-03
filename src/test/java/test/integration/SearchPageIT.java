@@ -6,9 +6,13 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
+import java.time.LocalTime;
 import java.util.stream.Stream;
 
+import static java.time.temporal.ChronoUnit.SECONDS;
+import static org.assertj.core.api.Assertions.within;
 import static test.integration.CustomAssertions.then;
+import static test.integration.Player.*;
 
 @QuarkusIntegrationTest
 class SearchPageIT {
@@ -21,10 +25,12 @@ class SearchPageIT {
     private Locator size10;
     private Locator size11;
     private Locator size12;
+    private Locator ticker;
+    private Locator login;
 
     @BeforeEach
     void setUp() {
-        // we can't initialize these on the vars, because the player didn't yet run the beforeEach
+        // we can't initialize these on the fields, because the player's beforeEach has to run first
         this.searchInput = player.locator("#search-input").first();
         this.resultList = player.locator("#result-list");
         this.firstBrand = player.locator(".brand\\:first-brand").first();
@@ -32,6 +38,8 @@ class SearchPageIT {
         this.size10 = player.locator(".size\\:10").first();
         this.size11 = player.locator(".size\\:11").first();
         this.size12 = player.locator(".size\\:12").first();
+        this.ticker = player.locator("#ticker").first();
+        this.login = player.locator("#login").first();
     }
 
     @Test
@@ -67,5 +75,24 @@ class SearchPageIT {
 
     private void thenActiveBrand(Locator brand) {
         Stream.of(firstBrand, otaBrand).forEach(b -> then(b).isActive(b == brand));
+    }
+
+    @Test
+    void shouldReceiveTimeUpdates() throws Exception {
+        player.navigate("http://localhost:8081");
+        player.screenshot("first-time-1.png");
+
+        waitWhile(() -> "?".equals(ticker.innerText()), "wait for ticker to start");
+        then(LocalTime.parse(ticker.innerText())).isCloseTo(LocalTime.now(), within(10, SECONDS));
+    }
+
+    @Test
+    void shouldLogIn() {
+        player.navigate("http://localhost:8081");
+        player.screenshot("login-1-logged-out.png");
+
+        then(login).hasText("Login");
+        login.click();
+        then(login).hasText("Jane");
     }
 }

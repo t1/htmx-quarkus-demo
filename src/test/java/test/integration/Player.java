@@ -10,6 +10,7 @@ import lombok.experimental.Delegate;
 import org.junit.jupiter.api.extension.*;
 
 import java.nio.file.Paths;
+import java.util.function.Supplier;
 
 import static com.microsoft.playwright.BrowserType.LaunchOptions;
 import static com.microsoft.playwright.Tracing.StartOptions;
@@ -23,6 +24,18 @@ public class Player implements Extension, BeforeAllCallback, BeforeEachCallback,
 
     private BrowserContext context;
     @Getter @Delegate private Page page;
+
+    static void waitWhile(Supplier<Boolean> condition, @SuppressWarnings("SameParameterValue") String message) throws InterruptedException {
+        int counter = 0;
+            System.out.print(message);
+        while (condition.get()) {
+            if (counter++ > 300) throw new RuntimeException("timeout during " + message);
+            System.out.print(".");
+            //noinspection BusyWait
+            Thread.sleep(100);
+        }
+        System.out.println();
+    }
 
     @Override public void beforeAll(ExtensionContext jupiterContext) {
         playwright = Playwright.create();
