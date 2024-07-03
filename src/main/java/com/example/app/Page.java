@@ -9,6 +9,7 @@ import jakarta.inject.Inject;
 import jakarta.servlet.http.HttpSession;
 import jakarta.ws.rs.core.UriInfo;
 import lombok.RequiredArgsConstructor;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 import static com.github.t1.bulmajava.basic.Anchor.a;
 import static com.github.t1.bulmajava.basic.Basic.*;
@@ -35,6 +36,8 @@ public class Page implements Renderable {
     private final UriInfo uriInfo;
     private final Login login;
 
+    @ConfigProperty(name = "htmx.debug", defaultValue = "false") Boolean debug;
+
     private Html html;
     private Section section;
 
@@ -44,14 +47,14 @@ public class Page implements Renderable {
                 .stylesheet("/webjars/fortawesome__fontawesome-free/css/all.css")
                 .stylesheet("/webjars/bulma/css/bulma.css")
                 .script("/webjars/htmx.org/dist/htmx.js")
-                .script("/webjars/htmx-ext-debug/debug.js")
                 .script("/webjars/htmx-ext-json-enc/json-enc.js")
                 .script("/webjars/htmx-ext-ws/ws.js")
+                .script("/webjars/htmx-ext-debug/debug.js")
                 .script("validation.js")
                 .content(body().hasNavbarFixedTop().content(
                         container().content(
                                 this.section = section().classes("mt-6")
-                                        .attr("hx-ext", "ws,json-enc")
+                                        .attr("hx-ext", "ws,json-enc" + (debug ? ",debug" : ""))
                                         .attr("ws-connect", "/connect/" + session.getId())
                                         .content(
                                                 navbar(),
