@@ -45,12 +45,13 @@ public class Page implements Renderable {
                 .stylesheet("/webjars/bulma/css/bulma.css")
                 .script("/webjars/htmx.org/dist/htmx.js")
                 .script("/webjars/htmx-ext-debug/debug.js")
+                .script("/webjars/htmx-ext-json-enc/json-enc.js")
                 .script("/webjars/htmx-ext-ws/ws.js")
                 .script("validation.js")
                 .content(body().hasNavbarFixedTop().content(
                         container().content(
                                 this.section = section().classes("mt-6")
-                                        .attr("hx-ext", "ws")
+                                        .attr("hx-ext", "ws,json-enc")
                                         .attr("ws-connect", "/connect/" + session.getId())
                                         .content(
                                                 navbar(),

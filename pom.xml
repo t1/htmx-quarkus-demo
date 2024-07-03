@@ -82,6 +82,11 @@
         </dependency>
         <dependency>
             <groupId>org.webjars.npm</groupId>
+            <artifactId>htmx-ext-json-enc</artifactId>
+            <version>${htmx.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.webjars.npm</groupId>
             <artifactId>htmx-ext-debug</artifactId>
             <version>${htmx.version}</version>
         </dependency>
