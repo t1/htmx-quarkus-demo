@@ -8,7 +8,6 @@ import jakarta.ws.rs.core.Response;
 
 import java.net.URI;
 
-import static com.github.t1.bulmajava.basic.Attribute.StringAttribute.stringAttribute;
 import static com.github.t1.bulmajava.basic.Basic.div;
 import static com.github.t1.bulmajava.basic.Color.LINK;
 import static com.github.t1.bulmajava.basic.Style.LIGHT;
@@ -62,6 +61,6 @@ public class Application {
     }
 
     private Attribute validate(String validExpression, String validHelp, String invalidHelp) {
-        return stringAttribute("onBlur", "validate(this, () => " + validExpression + ", '" + validHelp + "', '" + invalidHelp + "')");
+        return Attribute.of("onBlur", "validate(this, () => " + validExpression + ", '" + validHelp + "', '" + invalidHelp + "')");
     }
 }
