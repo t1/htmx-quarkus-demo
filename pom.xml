@@ -18,7 +18,7 @@
         <quarkus.platform.version>3.23.4</quarkus.platform.version>
         <skipITs>true</skipITs><!-- set to `false` to activate profile `IT` -->
 
-        <htmx.version>2.0.4</htmx.version>
+        <htmx.version>2.0.5</htmx.version>
 
         <compiler-plugin.version>3.14.0</compiler-plugin.version>
         <surefire-plugin.version>3.5.3</surefire-plugin.version>
