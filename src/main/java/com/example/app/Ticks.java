@@ -7,7 +7,7 @@ import jakarta.inject.Inject;
 import java.time.LocalTime;
 import java.time.ZoneId;
 
-import static com.github.t1.bulmajava.basic.Basic.span;
+import static com.github.t1.htmljava.HtmlBasics.span;
 import static java.time.format.DateTimeFormatter.ISO_LOCAL_TIME;
 import static java.time.temporal.ChronoUnit.SECONDS;
 

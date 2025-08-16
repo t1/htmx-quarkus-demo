@@ -2,19 +2,25 @@ package com.example.app;
 
 import com.example.domain.Filter;
 import com.example.domain.Product;
-import com.github.t1.bulmajava.basic.AbstractElement;
-import com.github.t1.bulmajava.basic.Element;
-import com.github.t1.bulmajava.basic.Renderable;
 import com.github.t1.bulmajava.elements.Button;
 import com.github.t1.bulmajava.elements.Title;
+import com.github.t1.htmljava.AbstractElement;
+import com.github.t1.htmljava.Element;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
-import static com.github.t1.bulmajava.basic.Basic.div;
 import static com.github.t1.bulmajava.basic.Color.INFO;
 import static com.github.t1.bulmajava.basic.State.ACTIVE;
 import static com.github.t1.bulmajava.elements.Button.button;
 import static com.github.t1.bulmajava.elements.Title.title;
+import static com.github.t1.htmljava.HtmlBasics.div;
+import static com.github.t1.htmljava.Renderable.ConcatenatedRenderable.concat;
 
 class FilterWidget extends AbstractElement<FilterWidget> {
     static Collection<AbstractElement<?>> filtersFor(List<Product> products, Set<String> activeFilters) {
@@ -76,12 +82,12 @@ class FilterWidget extends AbstractElement<FilterWidget> {
 
     private static Collection<AbstractElement<?>> stripSingleElementFilters(Collection<AbstractElement<?>> categories) {
         for (var category : new ArrayList<>(categories)) {
-            var categoryContent = category.contentAs(Renderable.ConcatenatedRenderable.class).renderables();
+            var filters = new ArrayList<>(category.contentAs(ConcatenatedRenderable.class).renderables());
             int groupCount = 0;
-            for (var i : new ArrayList<>(categoryContent)) {
-                if (i instanceof FilterWidget group) {
-                    if (group.optionCount() == 1) {
-                        categoryContent.remove(group);
+            for (var filter : new ArrayList<>(filters)) {
+                if (filter instanceof FilterWidget f) {
+                    if (f.optionCount() == 1) {
+                        filters.remove(filter);
                     } else {
                         groupCount++;
                     }
@@ -89,6 +95,8 @@ class FilterWidget extends AbstractElement<FilterWidget> {
             }
             if (groupCount == 0) {
                 categories.remove(category);
+            } else {
+                category.setContent(concat(filters.stream()));
             }
         }
         return categories;

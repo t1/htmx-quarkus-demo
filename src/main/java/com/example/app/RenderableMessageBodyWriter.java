@@ -1,6 +1,6 @@
 package com.example.app;
 
-import com.github.t1.bulmajava.basic.Renderable;
+import com.github.t1.htmljava.Renderable;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.MultivaluedMap;

@@ -1,0 +1,11 @@
+.input:user-invalid {
+    /* TODO we need to configure more colors than this */
+    border-color: var(--bulma-danger);
+    /*
+    background-color: hsl(
+            var(--bulma-danger-h),
+            var(--bulma-danger-s),
+            var(--bulma-danger-l));
+    */
+    background-color: hsl(var(--bulma-input-h), var(--bulma-input-s), calc(var(--bulma-input-background-l) + var(--bulma-input-background-l-delta)));
+}

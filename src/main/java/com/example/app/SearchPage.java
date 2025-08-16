@@ -2,10 +2,10 @@ package com.example.app;
 
 import com.example.domain.Product;
 import com.example.domain.Products;
-import com.github.t1.bulmajava.basic.Element;
-import com.github.t1.bulmajava.basic.Renderable;
 import com.github.t1.bulmajava.form.Field;
 import com.github.t1.bulmajava.form.Input;
+import com.github.t1.htmljava.Element;
+import com.github.t1.htmljava.Renderable;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.HeaderParam;
@@ -20,8 +20,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Stream;
 
-import static com.github.t1.bulmajava.basic.Basic.*;
-import static com.github.t1.bulmajava.basic.Renderable.ConcatenatedRenderable.concat;
 import static com.github.t1.bulmajava.columns.Columns.columns;
 import static com.github.t1.bulmajava.elements.Image.*;
 import static com.github.t1.bulmajava.elements.ImageSize._64x64;
@@ -30,6 +28,10 @@ import static com.github.t1.bulmajava.form.Field.field;
 import static com.github.t1.bulmajava.form.Input.input;
 import static com.github.t1.bulmajava.form.InputType.TEXT;
 import static com.github.t1.bulmajava.layout.Media.media;
+import static com.github.t1.htmljava.HtmlBasics.div;
+import static com.github.t1.htmljava.HtmlBasics.p;
+import static com.github.t1.htmljava.HtmlBasics.strong;
+import static com.github.t1.htmljava.Renderable.ConcatenatedRenderable.concat;
 
 @Path("/")
 @RequiredArgsConstructor(onConstructor_ = @Inject)
@@ -96,13 +98,13 @@ public class SearchPage {
     }
 
     private static Field searchField(String search) {
-        return field().label("Search")
-                .iconRight("search")
-                .control(searchInput(search));
+        return field("Search")
+                .content(searchInput(search))
+                .iconRight("search");
     }
 
     private static Input searchInput(String search) {
-        var input = input(TEXT).id("search-input").name("search")
+        var input = input(TEXT).id("search-input").fieldName("search")
                 .attr("hx-get", PATH)
                 .attr("hx-include", "*")
                 .attr("hx-push-url", "true")

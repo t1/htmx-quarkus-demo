@@ -3,6 +3,7 @@
          xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <modelVersion>4.0.0</modelVersion>
+
     <groupId>com.github.t1</groupId>
     <artifactId>htmx-quarkus-demo</artifactId>
     <version>1.0-SNAPSHOT</version>
@@ -47,12 +48,12 @@
         <dependency>
             <groupId>com.github.t1</groupId>
             <artifactId>bulma-java</artifactId>
-            <version>1.0a16</version>
+            <version>1.0a17-SNAPSHOT</version>
         </dependency>
 
         <dependency>
             <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-webjars-locator</artifactId>
+            <artifactId>quarkus-web-dependency-locator</artifactId>
         </dependency>
         <dependency>
             <groupId>org.webjars.npm</groupId>
