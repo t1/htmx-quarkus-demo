@@ -22,7 +22,7 @@
 
         <compiler-plugin.version>3.14.1</compiler-plugin.version>
         <surefire-plugin.version>3.5.4</surefire-plugin.version>
-        <playwright.version>1.56.0</playwright.version>
+        <playwright.version>1.57.0</playwright.version>
     </properties>
 
     <dependencyManagement>
