@@ -9,7 +9,7 @@ jobs:
   build:
     strategy:
       matrix:
-        jdk: [ 17 ]
+        jdk: [ 25 ]
     timeout-minutes: 60
     runs-on: ubuntu-latest
 

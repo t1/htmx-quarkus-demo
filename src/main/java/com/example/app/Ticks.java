@@ -17,6 +17,6 @@ public class Ticks {
     @Scheduled(every = "1s")
     public void tick(ScheduledExecution execution) {
         var t = LocalTime.ofInstant(execution.getFireTime().truncatedTo(SECONDS), ZoneId.systemDefault());
-        connections.broadcast(span(t.format(ISO_LOCAL_TIME)).classes("is-family-monospace").id("ticker"));
+        connections.broadcast(span(t.format(ISO_LOCAL_TIME)).classes("is-family-monospace").id("ticker").render());
     }
 }

@@ -56,7 +56,7 @@ public class Login {
     }
 
     private Response broadcast(Button button) {
-        var found = connections.broadcast(session.getId(), button);
+        var found = connections.sendTo(session.getId(), button.render());
         if (found) return Response.noContent().build();
         return Response.ok().header("HX-Trigger", "reload-page").build();
     }

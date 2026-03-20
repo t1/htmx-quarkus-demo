@@ -1,9 +1,11 @@
 package com.example.app;
 
-import com.github.t1.htmljava.AbstractElement;
-import com.github.t1.htmljava.Renderable;
 import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.websocket.*;
+import jakarta.websocket.OnClose;
+import jakarta.websocket.OnError;
+import jakarta.websocket.OnMessage;
+import jakarta.websocket.OnOpen;
+import jakarta.websocket.Session;
 import jakarta.websocket.server.PathParam;
 import jakarta.websocket.server.ServerEndpoint;
 import lombok.extern.slf4j.Slf4j;
@@ -19,29 +21,29 @@ public class Connections {
     private final Map<String, Connection> connections = new ConcurrentHashMap<>();
 
     private record Connection(String httpSessionId, Session wsSession) {
-        public void send(Renderable renderable) {
+        public void send(String message) {
             wsSession.getAsyncRemote()
-                    .sendObject(renderable.render(), result -> {
+                    .sendText(message, result -> {
                         if (result.isOK()) {
-                            log.debug("successfully broadcast to {}: {}", wsSession.getId(), renderable);
+                            log.debug("successfully broadcast to {}: {}", wsSession.getId(), message);
                         } else {
-                            log.error("failed to broadcast to " + wsSession.getId() + ": " + renderable, result.getException());
+                            log.error("failed to broadcast to " + wsSession.getId() + ": " + message, result.getException());
                         }
                     });
         }
     }
 
-    public boolean broadcast(String httpSessionId, Renderable renderable) {
+    public boolean sendTo(String httpSessionId, String message) {
         var foundAny = new AtomicBoolean(false);
         connections.values().stream()
                 .filter(connection -> connection.httpSessionId.equals(httpSessionId))
-                .peek(connection -> foundAny.set(true))
-                .forEach(connection -> connection.send(renderable));
+                .peek(_ -> foundAny.set(true))
+                .forEach(connection -> connection.send(message));
         return foundAny.get();
     }
 
-    public void broadcast(AbstractElement<?> element) {
-        connections.values().forEach(connection -> connection.send(element));
+    public void broadcast(String message) {
+        connections.values().forEach(connection -> connection.send(message));
     }
 
     @OnOpen
