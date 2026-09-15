@@ -22,7 +22,7 @@
 
         <compiler-plugin.version>3.16.0</compiler-plugin.version>
         <surefire-plugin.version>3.6.0</surefire-plugin.version>
-        <playwright.version>1.62.0</playwright.version>
+        <playwright.version>1.63.0</playwright.version>
         <lombok.version>1.18.48</lombok.version>
     </properties>
 
